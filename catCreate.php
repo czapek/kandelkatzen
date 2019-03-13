@@ -23,9 +23,12 @@
 				$sth->bindParam(':description', $description, PDO::PARAM_STR, 500);
 				$sth->bindParam(':id', $id, PDO::PARAM_INT);
 				$sth->bindParam(':deleted', $deleted, PDO::PARAM_BOOL);
-				$sth->execute();			
+				$sth->execute();	
+
+                $uniqueName = str_pad($id, 10, "0", STR_PAD_LEFT);
+                $uniqueFilename = $uniqueName . ".jpg";				
 					
-				if($descriptionOld != $description || trim($_FILES["fileUpload"]["tmp_name"]) != "")
+				if(file_exists ("upload/".$uniqueFilename) && ($descriptionOld != $description || trim($_FILES["fileUpload"]["tmp_name"]) != ""))
 			    {
 					$street = "";
 					$streetNumber = "";

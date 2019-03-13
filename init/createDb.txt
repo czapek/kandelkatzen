@@ -1,8 +1,12 @@
 sudo tail -f /var/log/nginx/error.log
 
 ps aux  | grep ngnix
-sudo chown http  /volume1/web/phpSample/upload
-sudo chmod -R 0755  /volume1/web/phpSample/upload
+sudo chown http  /volume1/web/kandelkatzen/upload
+sudo chmod -R 0755  /volume1/web/kandelkatzen/upload
+
+drop table event;
+
+drop table cat;
 
 
 CREATE TABLE cat (	
@@ -13,8 +17,6 @@ CREATE TABLE cat (
 	deleted BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (id)
 )
-
-drop table cat
 
 CREATE TABLE event (	
 	id int unsigned NOT NULL AUTO_INCREMENT,
@@ -40,4 +42,3 @@ CREATE INDEX idx_event_cat_related ON event(cat_related);
 
 CREATE INDEX idx_event_cat_id ON event(cat_id);
 
-drop table event
