@@ -10,11 +10,19 @@
 <?php	
 	$id = trim($_GET["id"]);
 	$connection = new PDO("$dsn", $username, $password, $options);
-	$sth = $connection->prepare('select description from cat where id = :id');
+	$sth = $connection->prepare('select c.description, CONCAT(street, \' \', street_number) as home from cat c left join event e on c.id = e.cat_id where c.id = :id and (e.type = \'HOME\' or e.type is null) order by e.id desc limit 1');
 	$sth->bindParam(':id', $id, PDO::PARAM_INT);
 	$sth->execute();
 	$row = $sth->fetch();
 	$description = $row['description'];
+	$home = $row['home'];
+	
+	$sth = $connection->prepare('select GROUP_CONCAT(description ORDER BY owner desc, id desc SEPARATOR \', \') as names from event where cat_id = :id and deleted = false and type = \'NAME\' order by id');
+	$sth->bindParam(':id', $id, PDO::PARAM_INT);
+	$sth->execute();
+	$row = $sth->fetch();
+	$names = $row['names'];
+	
 	$uniqueName = str_pad($id, 10, "0", STR_PAD_LEFT);
 	
     if(file_exists ("upload/" . $uniqueName . ".jpg")){ ?>
@@ -48,6 +56,8 @@
 	}	
 ?>
 </br>
+<p>Katze Nr. <?php echo $id;?> wird genannt: <?php echo htmlentities($names);?></p>
+<p><?php echo htmlentities($home);?></p>
 <p><?php echo htmlentities($description);?></p>
 <p><a href="catEdit.php?id=<?php echo $id;?>">Update Image and Description</a></p>
 <p><a href="events.php?catId=<?php echo $id;?>">Alle Ereignisse verwalten</a></p>
@@ -86,7 +96,7 @@
 	 <label>Wohnt im Revier (Strasse, Nummer) <input type="text" name="street" id="street" value="<?php echo htmlentities($street);?>">, 
 	 <input type="text" name="streetNumber" id="streetNumber" value="<?php echo htmlentities($streetNumber);?>"></label>
 	 <label>als <input type="text" size="33" name="description" id="description" value=""></label>
-	 <label>Ich bin der Besitzer <input type="checkbox" name="owner" /></label>
+	 <label>Ich bin der Besitzer <input type="checkbox" name="owner" checked /></label>
 	 <input type="hidden" name="catId" id="catId" value="<?php echo $id;?>">
      <input type="hidden" name="catRelated" id="catRelated" value="">
      <input type="hidden" name="type" id="type" value="HOME">	 
@@ -120,7 +130,7 @@
 	 <label>Wird im Revier (Strasse, Nummer) <input type="text" name="street" id="street" value="<?php echo htmlentities($street);?>">, 
 	 <input type="text" name="streetNumber" id="streetNumber" value="<?php echo htmlentities($streetNumber);?>"></label>
 	 <label> so gerufen: <input type="text" size="33" name="description" id="description" value=""></label>
-	 <label>Ich bin der Besitzer <input type="checkbox" name="owner" /></label>
+	 <label>Ich bin der Besitzer <input type="checkbox" name="owner" checked /></label>
 	 <input type="hidden" name="catId" id="catId" value="<?php echo $id;?>">
      <input type="hidden" name="catRelated" id="catRelated" value="">
      <input type="hidden" name="type" id="type" value="NAME">	 
@@ -161,7 +171,7 @@
 	 im Revier <input type="text" name="street" id="street" value="<?php echo htmlentities($street);?>">, 
 	 <input type="text" name="streetNumber" id="streetNumber" value="<?php echo htmlentities($streetNumber);?>"> 	 
 	 <label>Kontakt: <input type="text" size="33" name="description" id="description" value=""></label>
-	 <label>Ich bin der Besitzer <input type="checkbox" name="owner" /></label>
+	 <label>Ich bin der Besitzer <input type="checkbox" name="owner" checked /></label>
 	 <input type="hidden" name="catId" id="catId" value="<?php echo $id;?>">
      <input type="hidden" name="catRelated" id="catRelated" value="">
      <input type="hidden" name="type" id="type" value="MISSED">	 
@@ -170,7 +180,7 @@
 
 </br>
 </br>
-<h2>Gelegentliche Besuche</h2>
+<h2>Fremde Katze im Revier</h2>
 <table>
 <?php
 	$sth = $connection->prepare('select cat_related, created, street, street_number, sub_type, description, owner from event where cat_id = :id and type = \'VISIT\' and deleted = false order by created desc limit 5');
@@ -209,11 +219,18 @@
 		 echo $catRelated;
 	 ?>
 	 </a> <input type="hidden" size="5" name="catRelated" id="catRelated" readonly value="<?php echo trim($_GET["catRelated"]);?>">
-	 <label> ist <select name="subType" size="1"><option>Mitesser</option><option>Kumpel</option><option selected>Besucher</option><option>Spaziergänger</option><option>Konkurrent</option></select></label>
-	 <label>im Revier <input type="text" name="street" id="street" value="<?php echo htmlentities($street);?>">, </label>
-	 <input type="text" name="streetNumber" id="streetNumber" value="<?php echo htmlentities($streetNumber);?>"> 	 
+	 <label> ist <select name="subType" size="1">
+	 <option value="Fremdesser">Fremdesser</option>
+	 <option value="Kumpel">Kumpel</option>
+	 <option value="Besucher">Besucher</option>
+	 <option value="eimalig aufgetaucht">eimalig aufgetaucht</option>
+	 <option value="geduldet" selected>geduldet im Revier</option>
+	 <option value="Konkurrent">Konkurrent</option>
+	 </select></label>
+	 <input type="hidden" name="street" id="street" value="<?php echo htmlentities($street);?>">
+	 <input type="hidden" name="streetNumber" id="streetNumber" value="<?php echo htmlentities($streetNumber);?>"> 	 
 	 <label>Sonstiges: <input type="text" size="33" name="description" id="description" value=""></label>
-	 <label>Ich bin der Besitzer <input type="checkbox" name="owner" /></label>
+     <input type="hidden" name="owner" />
 	 <input type="hidden" name="catId" id="catId" value="<?php echo $id;?>">
      <input type="hidden" name="type" id="type" value="VISIT">	 
 	 <input name="btnSubmit" type="submit" value="Erstelle Besucher">
@@ -245,7 +262,7 @@
 	 <label>Will aus dem Revier (Strasse, Nummer) <input type="text" name="street" id="street" value="<?php echo htmlentities($street);?>"> 
 	 <input type="text" name="streetNumber" id="streetNumber" value="<?php echo htmlentities($streetNumber);?>"></label>
 	 <label>bekanntgeben dass, <input type="text" size="33" maxlength="250" name="description" id="description" value=""></label>
-	 <label>Ich bin der Besitzer <input type="checkbox" name="owner" /></label>
+	 <label>Ich bin der Besitzer <input type="checkbox" name="owner" checked /></label>
 	 <input type="hidden" name="catId" id="catId" value="<?php echo $id;?>">
      <input type="hidden" name="catRelated" id="catRelated" value="">
      <input type="hidden" name="type" id="type" value="TWITTER">	 
