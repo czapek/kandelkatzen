@@ -1,14 +1,24 @@
 <?php
-    require "header.php";
-?>
-
-<html>
-<head>
-<title>Upload Resize to MySQL</title>
-</head>
-<body>
-
-
+    require "htmlHeader.php";
+?>	
+	<!-- MAIN -->
+		<div role="main" id="main" class="cf">
+			
+			<!-- page-content -->
+			<div class="page-content">
+			
+				
+				<!-- entry-content -->	
+	        	<div class="entry-content cf">
+	        		
+	        		<h2 class="heading">Willkommen bei den Kandelkatzen</h2>
+	        		<p>Wolltet ihr nicht auch schon immer mal wissen wo sich eure Katze als rumtreibt oder wo die Rumtreiber in eurerm Garten alle herkommen.
+					Vielleicht wird ja die ein oder andere Katze sehnlichst vermisst oder ihr macht euch selber Sorgen wo die eigene Katze seit gestern geblieben ist. Vielleicht hält sie ja nur auf nachbars Sofa
+					ein ausdauerndes Nickerchen weil die Nacht mal wieder so anstrengend war, dass sie einfach überall einschlafen könnte.</br>
+					Hier könnt ihr rund um die Kandelstraße eure Katzenbegenungen mit anderen Teilen und müsst euch in Zukunft vielleicht weniger Sorgen machen ohne gleich zu komplizierten technischen Hilfsmitteln zu greifen.
+					Auf der Startseite seht ihr immer 5 neusten Einträge. Vermisstenmeldungen stehen dabei immer an erster Stelle.</p></br>
+					
+					
 <?php
     require "config.php";    
 
@@ -20,46 +30,54 @@ where c2.deleted = false
 order by ISNULL(type), street, convert(street_number, int), c2.created desc";	
 ?>
 
-<h2><?php echo $_GET["message"];?></h2>
 
-<table width="200" border="1">
-<tr>
-<th>Datum</th>
-<th>Genannt</th>
-<th>Wohnhaft</th>
-<th>Beschreibung</th>
-<th>Bild</th>
-</tr>
 
 <?php
 	 foreach ($connection->query($sql) as $row) {
 		 $uniqueName = str_pad($row['id'], 10, "0", STR_PAD_LEFT);
 ?>
-<tr>
-<td><?php echo htmlentities($row['created']);?></td>
-<td><?php echo htmlentities($row['names']);?></td>
-<td><?php echo htmlentities($row['home']);?></td>
-<td><?php echo htmlentities($row['description']);?></td>
-<td>
-
-
+<div class="one-half">
+<h4 class="heading"><?php echo htmlentities($row['created']);?></h4>
 <?php if(file_exists ("upload/" . $uniqueName . ".jpg")){ ?>
      <a href="cat.php?id=<?php echo $row['id']; ?>"><img src="upload/<?php echo $uniqueName . '_tn.jpg';?>"></a>
 <?php } else { ?>
      <a href="cat.php?id=<?php echo $row['id']; ?>">kein Bild</a>
 <?php } ?>
-
-</td>
-</tr>
+</div>
+<div class="one-half last">
+<h4 class="heading"><?php echo htmlentities($row['home']);?></h4>
+<p><?php echo htmlentities($row['names']);?><tp>
+<p><?php echo htmlentities($row['description']);?></p>
+</div>
 <?php
 	}
-?>
+?>	
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+										
+				</div>
+				<!-- ENDS entry-content -->
 
-</table>
-
-
-<br>
-<a href="catEdit.php">Neue Katze</a>
-</body>
-</html>
-
+			</div><!-- ENDS page-content -->
+						
+		</div>
+		<!-- ENDS MAIN -->
+			
+<?php
+    require "htmlFooter.php";
+?>						
