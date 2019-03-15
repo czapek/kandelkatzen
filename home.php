@@ -1,6 +1,5 @@
 <?php
     require "htmlHeader.php";
-	require "config.php";  
 ?>	
 	<!-- MAIN -->
 		<div role="main" id="main" class="cf">
@@ -21,7 +20,7 @@
 					
 					
 <?php
-  
+    require "config.php";    
 
 	$connection = new PDO("$dsn", $username, $password, $options);
 	$sql = "select c2.created, c2.id, c2.description,  CONCAT(h.street, \" \", h.street_number) as home, n.names from cat c2 
@@ -53,23 +52,7 @@ order by ISNULL(type), street, convert(street_number, int), c2.created desc";
 <?php
 	}
 ?>	
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
+				
 										
 				</div>
 				<!-- ENDS entry-content -->

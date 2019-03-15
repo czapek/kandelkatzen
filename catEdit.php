@@ -1,7 +1,8 @@
 <?php
-    require "header.php";
-    require "config.php";
-	
+    require "htmlHeader.php";
+	require "config.php";  
+?>	
+<?php
 	$description = "eine neue Katze";
 	if(isset($_GET["id"]))
 	{
@@ -21,11 +22,6 @@
      <p>kein Bild</p>
 <?php } } ?>
 
-<html>
-<head>
-<title>Katze erstellen oder bearbeiten</title>
-</head>
-<body>
 		<form name="form1" method="post" action="catCreate.php" enctype="multipart/form-data">
 
 		 <label>Beschreibung: 
@@ -40,5 +36,6 @@
 		 <input name="btnSubmit" type="submit" value="Katze">
 
 	</form>
-</body>
-</html>
+<?php
+    require "htmlFooter.php";
+?>						

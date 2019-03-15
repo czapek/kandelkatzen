@@ -1,12 +1,7 @@
 <?php
-    require "header.php";
-    require "config.php";
-?>
-<html>
-<head>
-<title>Cat</title>
-</head>
-<body>
+    require "htmlHeader.php";
+	require "config.php";  
+?>	
 <?php	
 	$id = trim($_GET["id"]);
 	$connection = new PDO("$dsn", $username, $password, $options);
@@ -28,7 +23,7 @@
     if(file_exists ("upload/" . $uniqueName . ".jpg")){ ?>
      <p><a href="index.php"><img src="upload/<?php echo $uniqueName . '.jpg';?>" border="0"></a></p>
 <?php } else { ?>
-     <p>kein Bild</p>
+     <a href="index.php">kein Bild</a>
 <?php } 
 
     $sth = $connection->prepare("select cat_related, GROUP_CONCAT(sub_type SEPARATOR ', ') as sub_type from ((select cat_id as cat_related, concat('bei dieser als ', sub_type , ' bekannt') as sub_type from event where cat_related = :id and deleted = false) union (select cat_related, concat('ist hier ', sub_type) as sub_type from event where cat_id = :id and deleted = false)) c where c.cat_related is not null and c.cat_related <> :id group by cat_related");
@@ -269,5 +264,7 @@
 	 <input name="btnSubmit" type="submit" value="Erstelle Nachricht">
 </form>
 <h1><?php echo $_GET["message"];?></h1>
-</body>
-</html>
+
+<?php
+    require "htmlFooter.php";
+?>						

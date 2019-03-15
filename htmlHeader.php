@@ -42,20 +42,20 @@
 			<!-- nav -->
 			<nav class="cf">
 				<ul id="nav" class="sf-menu">
-					<li class="current-menu-item"><a href="index.html"><span>AKTUELLES</span></a></li>
-					<li><a href="catEdit.php"><span>UNBEKANNT</span></a></li>
-					<li><a href="page.html"><span>REVIERE</span></a>
+					<li class="current-menu-item"><a href="index.php"><span>AKTUELLES</span></a></li>
+					<li><a href="index.php"><span>UNBEKANNT</span></a></li>
+					<li><a href="home.php"><span>REVIERE</span></a>
 						<ul>
-							<li><a href="page.html">Kandelstrasse</a></li>
-							<li><a href="page-typography.html">Am Himmelreich</a></li>
-							<li><a href="page-elements.html">Wilhelmstraße</a></li>
-							<li><a href="page-sidebar.html">Carl-Orff-Weg</a></li>
-							<li><a href="page-sidebar.html">Hochburger Str.</a></li>
-							<li><a href="page-sidebar.html">Moltkestraße</a></li>
+							<li><a href="home.php?home=<?php echo urlencode ( 'Kandelstrasse' ); ?>">Kandelstrasse</a></li>
+							<li><a href="home.php?home=<?php echo urlencode ( 'Am Himmelreich' ); ?>">Am Himmelreich</a></li>
+							<li><a href="home.php?home=<?php echo urlencode ( 'Wilhelmstraße' ); ?>">Wilhelmstraße</a></li>
+							<li><a href="home.php?home=<?php echo urlencode ( 'Carl-Orff-Weg' ); ?>">Carl-Orff-Weg</a></li>
+							<li><a href="home.php?home=<?php echo urlencode ( 'Hochburger Str.' ); ?>">Hochburger Str.</a></li>
+							<li><a href="home.php?home=<?php echo urlencode ( 'Moltkestraße' ); ?>">Moltkestraße</a></li>
 						</ul>
 					</li>
 					<li><a href="catEdit.php"><span>NEUE KATZE</span></a></li>
-					<li><a href="blog.html"><span>KONTAKT</span></a></li>
+					<li><a href="contact.php"><span>KONTAKT</span></a></li>
 				</ul>
 				<div id="combo-holder"></div>
 			</nav>

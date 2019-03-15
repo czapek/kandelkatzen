@@ -1,14 +1,9 @@
 <?php
-    require "header.php";
+    require "htmlHeader.php";
 	require "config.php";   
 	$catId = trim($_GET["catId"]);
 ?>
 
-<html>
-<head>
-<title>Alle Ereignisse</title>
-</head>
-<body>
 <h1><?php echo $_GET["message"];?></h1>
 <a href="cat.php?id=<?php echo $catId;?>">Zurück</a>
 <table>
@@ -54,5 +49,6 @@
 ?>
 </table>
 
-</body>
-</html>
+<?php
+    require "htmlFooter.php";
+?>						

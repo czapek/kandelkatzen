@@ -1,15 +1,5 @@
 <?php
-    require "header.php";
-?>
-
-<html>
-<head>
-<title>Select cat </title>
-</head>
-<body>
-
-
-<?php
+    require "htmlHeader.php";
     require "config.php";    
 
 	$connection = new PDO("$dsn", $username, $password, $options);
@@ -57,6 +47,7 @@ order by ISNULL(type), street, convert(street_number, int), c2.created desc";
 </table>
 
 
-</body>
-</html>
+<?php
+    require "htmlFooter.php";
+?>						
 
