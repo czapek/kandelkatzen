@@ -54,6 +54,7 @@
 (select max(e.id) from cat c inner join event e on e.cat_id = c.id where c.deleted = false and e.deleted = false group by c.id) order by created desc limit 5";	
 $sth = $connection->prepare($sql);	
 
+
 require "catEventListElement.php";
 ?>						
 				</div>

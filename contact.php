@@ -29,8 +29,19 @@
 	</nav>
 	<!-- ends nav -->			
 </header>
-<img src="img/a_cat_happy_birthday_cat_meme1.jpg">
+</header>
+	<!-- MAIN -->
+		<div role="main" id="main" class="cf">
+			
+			<!-- page-content -->
+			<div class="page-content">
+			
+				
+				<!-- entry-content -->	
+	        	<div class="entry-content cf">
 
+<img src="img/a_cat_happy_birthday_cat_meme1.jpg">
+</div></div></div>
 <?php
     require "htmlFooter.php";
 ?>						

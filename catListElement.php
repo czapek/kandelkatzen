@@ -26,7 +26,14 @@ if(empty($row['names']))
 else
    echo "genannt " . htmlentities($row['names']);
 ?>
-</br></br>seit <?php echo formatDate($row['created']);?>
+			
+</br></br><?php 
+
+if(!$catSelect) {
+    echo "seit " . formatDate($row['created']);
+} else { ?>
+	<a href="cat.php?id=<?php echo $row['id']; ?>&catRelated=<?php echo $row['id']; ?>" class="link-button">auswählen</a>
+<?php	}	?> 
 </td></tr>
 </table>
 <?php

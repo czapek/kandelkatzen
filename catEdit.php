@@ -24,7 +24,7 @@
 					<li><a href="home.php?home=<?php echo urlencode ( 'Moltkestraße' ); ?>">Moltkestraße</a></li>
 				</ul>
 			</li>
-			<li><a href="catEdit.php"><span>NEUE KATZE</span></a></li>
+			<li class="current-menu-item"><a href="catEdit.php"><span>NEUE KATZE</span></a></li>
 			<li><a href="contact.php"><span>KONTAKT</span></a></li>
 		</ul>
 		<div id="combo-holder"></div>

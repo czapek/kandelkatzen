@@ -32,22 +32,8 @@
 	<!-- ends nav -->			
 </header>
 <h1><?php echo $_GET["message"];?></h1>
-<a href="cat.php?id=<?php echo $catId;?>">Zurück</a>
+<p><a href="cat.php?id=<?php echo $catId;?>">Zurück</a></p>
 <table>
- <tr>	 
-		 <th>id</th>
-		 <th>cat_id</th>
-		 <th>cat_related</th>
-		 <th>created</th>
-		 <th>type</th>
-		 <th>sub_type</th>
-		 <th>street</th>
-		 <th>street_number</th>
-		 <th>description</th>
-		 <th>owner</th>
-		 <th>ip</th>
-		 <th>deleted</th>
-</tr>
 <?php    
 	$connection = new PDO("$dsn", $username, $password, $options);
 	$sth = $connection->prepare('select * from event where cat_id = :catId order by id desc');	
@@ -57,18 +43,15 @@
 		while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
 ?>				
          <tr>	 
-		 <td><?php echo htmlentities($row['id']);?></td>
-		 <td><?php echo htmlentities($row['cat_id']);?></td>
-		 <td><?php echo htmlentities($row['cat_related']);?></td>
-		 <td><?php echo htmlentities($row['created']);?></td>
-		 <td><?php echo htmlentities($row['type']);?></td>
-		 <td><?php echo htmlentities($row['sub_type']);?></td>
-		 <td><?php echo htmlentities($row['street']);?></td>
-		 <td><?php echo htmlentities($row['street_number']);?></td>
-		 <td><?php echo htmlentities($row['description']);?></td>
-		 <td><?php if($row['owner']) echo "vom Besitzer";?></td>
-		 <td><?php echo htmlentities($row['ip']);?></td>
-		 <td><a href="eventDelete.php?catId=<?php echo $catId;?>&id=<?php echo $row['id'];?>"><?php if($row['deleted']) echo "unsichtbar"; else echo "sichtbar";?></a></td>
+ 
+		 <td style="padding:2px;"><?php echo htmlentities(htmlentities(date_format(new DateTime($row['created']), 'd.m.y')));?></td>
+		 <td style="padding:2px;"><?php echo htmlentities($row['type']);?></td>
+		 <td style="padding:2px;"><?php echo htmlentities($row['sub_type']);?></td>
+		 <td style="padding:2px;"><?php echo htmlentities($row['street']);?></td>
+		 <td style="padding:2px;"><?php echo htmlentities($row['street_number']);?></td>
+		 <td style="padding:2px;"><?php echo htmlentities($row['description']);?></td>
+		 <td style="padding:2px;"><?php if($row['owner']) echo "Besitzer";?></td>
+		 <td style="padding:2px;"><a href="eventDelete.php?catId=<?php echo $catId;?>&id=<?php echo $row['id'];?>"><?php if($row['deleted']) echo "unsichtbar"; else echo "sichtbar";?></a></td>
 		 </tr>
 <?php
 	   }
