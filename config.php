@@ -14,6 +14,11 @@ $options    = array(
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET lc_time_names='de_DE',NAMES utf8",
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
               );
+
+function formatDate($o)
+{
+	return htmlentities(date_format(new DateTime($o), 'd.m.y H:i'));
+}
 			  
 function getRealIpAddr()
 {

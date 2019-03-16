@@ -47,7 +47,7 @@
 					$sth->bindParam(':subType', $subType, PDO::PARAM_STR, 50);
 					$sth->bindParam(':street', $street, PDO::PARAM_STR, 250);
 					$sth->bindParam(':streetNumber', $streetNumber, PDO::PARAM_STR, 50);
-					$sth->bindParam(':description', $descriptionOld, PDO::PARAM_STR, 500);
+					$sth->bindParam(':description', $description, PDO::PARAM_STR, 500);
 					$sth->bindParam(':ip', getRealIpAddr(), PDO::PARAM_STR, 50);
 					$sth->execute();		
 					$idEvent = $connection->lastInsertId();			
@@ -59,6 +59,19 @@
 				$sth->bindParam(':ip', getRealIpAddr(), PDO::PARAM_STR, 50);
 				$sth->execute();
 				$id = $connection->lastInsertId(); 
+				
+				$street = "";
+				$streetNumber = "";
+				$type = "CREATE";
+				$sth = $connection->prepare('INSERT INTO event (cat_id, type, sub_type, street, street_number, description, created, ip) VALUES (:catId, :type, :subType, :street, :streetNumber, :description, now(), :ip)');
+				$sth->bindParam(':catId', $id, PDO::PARAM_INT);
+				$sth->bindParam(':type', $type, PDO::PARAM_STR, 50);
+				$sth->bindParam(':subType', $subType, PDO::PARAM_STR, 50);
+				$sth->bindParam(':street', $street, PDO::PARAM_STR, 250);
+				$sth->bindParam(':streetNumber', $streetNumber, PDO::PARAM_STR, 50);
+				$sth->bindParam(':description', $description, PDO::PARAM_STR, 500);
+				$sth->bindParam(':ip', getRealIpAddr(), PDO::PARAM_STR, 50);
+				$sth->execute();	
 			}
 			
 			$uniqueName = str_pad($id, 10, "0", STR_PAD_LEFT);	

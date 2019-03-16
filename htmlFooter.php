@@ -1,5 +1,5 @@
 			
-		</div>
+	
 		<!-- ENDS MAIN -->
 		
 		<footer>		
@@ -12,6 +12,20 @@
 				<div class="ribbon-right"></div>
 			</div>
 			<!-- ENDS twitter -->	
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		</footer>
 		
 		
